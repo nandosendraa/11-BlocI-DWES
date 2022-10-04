@@ -1,10 +1,23 @@
 <?php
 
 class Employee{
+    const MAX_SALARY = 3333;
     public string $name;
     public string $lastname;
     public string $salary;
     private array $phones;
+
+    function __construct0($nm,$lnm,$sl){
+        $this->setName($nm);
+        $this->setLastname($lnm);
+        $this->setSalary($sl);
+    }
+
+    function __construct1($nm,$lnm){
+        $this->setName($nm);
+        $this->setLastname($lnm);
+        $this->setSalary("1000");
+    }
 
     public function getName(): string{
         return $this->name;
@@ -28,7 +41,7 @@ class Employee{
         return $this->name." ".$this->lastname;
     }
     public function mustPayTaxes(): bool{
-        if ($this->salary > 3333)
+        if ($this->salary > self::MAX_SALARY)
             return true;
         else
             return false;
