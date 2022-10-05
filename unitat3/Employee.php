@@ -1,13 +1,13 @@
 <?php
 
 class Employee{
-    const MAX_SALARY = 3333;
+    const MAX_SALARY = '3333';
     public static string $name;
     public static string $lastname;
     public static string $salary;
     private static array $phones;
 
-    function __construct($nm,$lnm,$sl=1000){
+    function __construct($nm,$lnm,$sl='1000'){
         $this->setName($nm);
         $this->setLastname($lnm);
         $this->setSalary($sl);
@@ -47,7 +47,7 @@ class Employee{
     public static function listPhones(): string{
         if (count(self::$phones)==1)
             return self::$phones[0];
-            return implode(', ',self::$phones);
+        return implode(', ',self::$phones);
     }
     public function emptyPhones(): void{
         self::$phones=[];
