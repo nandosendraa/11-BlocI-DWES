@@ -1,9 +1,9 @@
 <?php
 class Employee{
     const MAX_SALARY = 3333;
-    public string $name;
-    public string $lastname;
-    public string $salary;
+    private string $name;
+    private string $lastname;
+    private string $salary;
     private array $phones;
 
     function __construct(string $nm,string $lnm,?int $sl=1000){
