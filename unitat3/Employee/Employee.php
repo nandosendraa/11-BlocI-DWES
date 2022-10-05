@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 class Employee{
     const MAX_SALARY = '3333';
     public static string $name;
