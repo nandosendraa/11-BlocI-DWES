@@ -6,16 +6,10 @@ class Employee{
     public string $salary;
     private array $phones;
 
-    function __construct0($nm,$lnm,$sl){
+    function __construct(string $nm,string $lnm,?int $sl=1000){
         $this->setName($nm);
         $this->setLastname($lnm);
         $this->setSalary($sl);
-    }
-
-    function __construct1($nm,$lnm){
-        $this->setName($nm);
-        $this->setLastname($lnm);
-        $this->setSalary("1000");
     }
 
     public function getName(): string{
