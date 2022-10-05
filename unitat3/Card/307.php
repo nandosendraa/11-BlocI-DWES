@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 include 'Card.php';
 $c1 = new Card('suit1','symbol1','1');
 $c2 = new Card('suit2','symbol2','2');
