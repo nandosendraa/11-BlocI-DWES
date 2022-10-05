@@ -1,55 +1,67 @@
 <?php
+
 class Employee{
     const MAX_SALARY = 3333;
-    private string $name;
-    private string $lastname;
-    private string $salary;
-    private array $phones;
+    public static string $name;
+    public static string $lastname;
+    public static string $salary;
+    private static array $phones;
 
-    function __construct(string $nm,string $lnm,?int $sl=1000){
+    function __construct($nm,$lnm,$sl=1000){
         $this->setName($nm);
         $this->setLastname($lnm);
         $this->setSalary($sl);
     }
 
-    public function getName(): string{
-        return $this->name;
+    public static function getName(): string{
+        return self::$name;
     }
     public function setName(string $name): void{
-        $this->name = $name;
+        self::$name = $name;
     }
-    public function getLastname(): string{
-        return $this->lastname;
+    public static function getLastname(): string{
+        return self::$lastname;
     }
     public function setLastname(string $lastname): void{
-        $this->lastname = $lastname;
+        self::$lastname = $lastname;
     }
-    public function getSalary(): string{
-        return $this->salary;
+    public static function getSalary(): string{
+        return self::$salary;
     }
     public function setSalary(string $salary): void{
-        $this->salary = $salary;
+        self::$salary = $salary;
     }
-    public function  getFullname(): string{
-        return $this->name." ".$this->lastname;
+    public static function  getFullname(): string{
+        return self::$name." ".self::$lastname;
     }
     public function mustPayTaxes(): bool{
-        if ($this->salary > self::MAX_SALARY)
+        if (self::$salary > self::MAX_SALARY)
             return true;
         else
             return false;
     }
-    public function addPhone(string $phone): void{
-        $this->phones[]=$phone;
+    public static function addPhone(string $phone): void{
+        self::$phones[]=$phone;
     }
 
-    public function listPhones(): string{
-        foreach ($this->phones as $phone){
-            $listedPhones =+ $phone."," ;
-        }
-        return $listedPhones;
+    public static function listPhones(): string{
+        if (count(self::$phones)==1)
+            return self::$phones[0];
+            return implode(', ',self::$phones);
     }
     public function emptyPhones(): void{
-        $this->phones=[];
+        self::$phones=[];
+    }
+
+    public static function toHtml (Employee $emp): string{
+        $html =
+         "<ol>".
+         "<li>".Employee::getFullName()."</li>".
+         "<li>".Employee::getLastName()."</li>".
+         "<li>".Employee::getSalary()."</li>".
+         "<li>".Employee::listPhones()."</li>".
+         "</ol>";
+
+        return $html;
     }
 }
