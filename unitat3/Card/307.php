@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 include 'Card.php';
-$c1 = new Card('suit1','symbol1','1');
-$c2 = new Card('suit2','symbol2','2');
-$c3 = new Card('suit3','symbol3','3');
-$c4 = new Card('suit4','symbol4','4');
-$c5 = new Card('suit5','symbol5','5');
+$c1 = new Card('suit1','symbol1',1);
+$c2 = new Card('suit2','symbol2',2);
+$c3 = new Card('suit3','symbol3',3);
+$c4 = new Card('suit4','symbol4',4);
+$c5 = new Card('suit5','symbol5',5);
 
 ?>
 <!DOCTYPE html>
