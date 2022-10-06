@@ -5,10 +5,10 @@ class Card{
     private string $symbol;
     private int $value;
 
-    function __construct($st,$sy,$val){
-        $this->setSuit($st);
-        $this->setSymbol($sy);
-        $this->setValue($val);
+    function __construct($suit,$symbol,$value){
+        $this->setSuit($suit);
+        $this->setSymbol($symbol);
+        $this->setValue($value);
     }
     public function getSuit(): string{
         return $this->suit;
