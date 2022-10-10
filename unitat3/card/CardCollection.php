@@ -1,25 +1,71 @@
 <?php
-declare(strict_types=1);
-class CardCollection{
-    private array $cards;
 
-    public function add(array $cards):void{
-        $this->cards=$cards;
+class CardCollection implements Iterator
+{
+    private array $cards;
+    private int $index = 0;
+
+    function add(array $array)
+    {
+        //$this->cards = $array;
+        foreach($array as $card) {
+            $this->addCard($card);
+        }
     }
-    public function addCard(Card $card):void{
-        $this->cards[]= $card;
+    
+    function addCard(Card $card)
+    {
+        $this->cards[] = $card;
     }
-    public function shuffle():void{
+
+    function shuffle() {
         shuffle($this->cards);
     }
-    public function getCards():array{
+
+    function getCards(): array {
         return $this->cards;
     }
-    public function writer(): string{
-        $writed="";
-        foreach ($this->cards as $card){
-            $writed .= "<div>".$card->getSuit()." ".$card->getSymbol()."</div>";
-        }
-        return $writed;
+
+    function deal (int $amount = 1): array {
+        $cards=[];
+        for ($i=0; $i< $amount; $i++)
+            $cards[]=array_shift($this->cards);
+
+        return $cards;
+    }
+
+    function play(): Card {
+        return array_shift($this->cards);
+    }
+
+    public function current(): mixed
+    {
+        // TODO: Implement current() method.
+        return $this->cards[$this->index];
+    }
+
+    public function next(): void
+    {
+        // TODO: Implement next() method.
+        $this->index++;
+    }
+
+    public function key(): mixed
+    {
+        // TODO: Implement key() method.
+        return $this->index;
+    }
+
+    public function valid(): bool
+    {
+        // TODO: Implement valid() method.
+        return array_key_exists($this->index, $this->cards);
+    }
+
+    public function rewind(): void
+    {
+        // TODO: Implement rewind() method.
+        $this->index = 0;
     }
 }
+
