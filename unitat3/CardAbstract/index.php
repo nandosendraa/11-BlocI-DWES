@@ -51,6 +51,8 @@ function play(Hand $hand1,Hand $hand2): array
     }
     return $results;
 }
+
+$results = play($hand1,$hand2);
 ?>
 
 
@@ -92,7 +94,7 @@ function play(Hand $hand1,Hand $hand2): array
     </div>
     <div class="flex">
         <?php
-            foreach (play($hand1,$hand2) as $match){
+            foreach ($results as $match){
                 if ($match == 0){
                     echo " EMPAT ";
                 }
@@ -107,14 +109,14 @@ function play(Hand $hand1,Hand $hand2): array
     </div>
     <div class="flex">
         <?php
-        if (array_sum(play($hand1,$hand2))==0) {
+        if (array_sum($results)==0) {
             echo "Empat";
         }
-        else if (array_sum(play($hand1,$hand2))>1) {
-            echo "El jugador 1 guamya la partida";
+        else if (array_sum($results)>1) {
+            echo "El jugador 1 guanya la partida";
         }
         else
-            echo "El jugador 2 guamya la partida";
+            echo "El jugador 2 guanya la partida";
         ?>
     </div>
 </body>
