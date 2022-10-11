@@ -2,5 +2,5 @@
 
 interface CardCollectionWriterInterface
 {
-    public function write(CardCollection $cardCollection);
+    public function write(CardCollection $cardCollection): string;
 }

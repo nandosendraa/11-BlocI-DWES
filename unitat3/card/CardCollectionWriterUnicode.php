@@ -8,11 +8,12 @@ class CardCollectionWriterUnicode implements CardCollectionWriterInterface {
                 "clubs"=>["&clubs;", "black"]
         ];
     }
-    public function write(CardCollection $cardCollection) {
+    public function write(CardCollection $cardCollection): string {
+        $output = "";
         foreach ($cardCollection->getCards() as $card) {
-            echo sprintf("<div>%s <span style=\"color:%s\"> %s</span> </div>", $card->getSymbol(), 
-                $this->codes[$card->getSuit()->name][1], $this->codes[mb_strtolower($card->getSuit()->name)][0]);
+            $output .= sprintf("<div>%s <span style=\"color:%s\"> %s</span> </div>", $card->getSymbol(),
+                $this->codes[mb_strtolower($card->getSuit()->name)][1], $this->codes[mb_strtolower($card->getSuit()->name)][0]);
         }
+        return $output;
     }
 }
-?>

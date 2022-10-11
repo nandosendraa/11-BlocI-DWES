@@ -12,12 +12,14 @@ class CardCollectionWriterImage implements CardCollectionWriterInterface
         ];
     }
 
-    public function write(CardCollection $cardCollection)
+    public function write(CardCollection $cardCollection): string
     {
+        $output = "";
         foreach ($cardCollection as $card) {
-            echo sprintf("<div><img src=\"cards\%s_of_%s.svg\" alt=\"%s \" /></div>\n", $card->getSymbol(),
+            $output .= sprintf("<div><img src=\"cards\%s_of_%s.svg\" alt=\"%s \" /></div>\n", $card->getSymbol(),
                 mb_strtolower($card->getSuit()->name), $this->codes[mb_strtolower($card->getSuit()->name)][0]);
         }
+        return $output;
     }
 }
 

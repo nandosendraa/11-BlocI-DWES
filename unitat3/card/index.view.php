@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Actividad 303</title>
+    <title>Actividad 311</title>
     <meta name="description" content="PHP, PHPStorm">
     <meta name="author" content="Vicent Jordà">
     <style>
@@ -27,7 +27,7 @@
 <body>
 
 
-<h1>304 -Playing game</h1>
+<h1>311 -Playing game</h1>
 <h2>Cards</h2>
 <div class="flex">
     <?= $deckOutput ?>
@@ -55,6 +55,7 @@
         <?php endif; ?>
     <?php endforeach; ?>
 </div>
+
 
 <h2>Resultat</h2>
 <?php if ($result > 0) : ?>

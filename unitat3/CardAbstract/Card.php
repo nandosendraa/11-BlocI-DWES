@@ -10,7 +10,7 @@ class Card {
      * @param int $value
      */
     public function __construct(Suit $suit,
-        string $symbol, int $value)
+                                string $symbol, int $value)
     {
         $this->suit = $suit;
         $this->symbol = $symbol;
