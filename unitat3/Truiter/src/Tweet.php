@@ -10,8 +10,13 @@ class Tweet
     public function __construct(string $text, User $user){
         $this->setText($text);
         $this->setAuthor($user);
+        $this->attachments=[];
         $this->createdAt = new DateTime();
         $this->likeCount = 0;
+    }
+
+    public function addAttachment(Media $media): void{
+        $this->attachments[]=$media;
     }
 
     public function getText(): string
@@ -39,9 +44,9 @@ class Tweet
         return $this->attachments;
     }
 
-    public function setAttachments(array $attachments): void
+    public function setAttachments(Media $media): void
     {
-        $this->attachments = $attachments;
+        $this->attachments[] = $media;
     }
 
     public function getAuthor(): User
