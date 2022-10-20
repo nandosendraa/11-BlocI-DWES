@@ -29,28 +29,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-    if (strlen($nom)>100)
-        $errors[] = "El nom es masa llarg";
+    if ( empty($nom) || strlen($nom)>100)
+        $errors[] = "El nom no es correcte";
 
-    if (strlen($phone)>9)
-        $errors[] = "El telefon ha de tindre 9 digits";
+    if (empty($phone) ||strlen($phone)>9)
+        $errors[] = "El telefon es invalid";
 
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)==false)
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         $errors[] = "El correu no es valid";
 
-    if (filter_var($url, FILTER_VALIDATE_URL)==false)
+    if (!filter_var($url, FILTER_VALIDATE_URL))
         $errors[] = "La URL no es valid";
     if ($genere == "")
         $errors[] = "Has de marcar el genere";
-    if ($hobbies == [])
+    if (empty($hobbies))
         $errors[] = "Has de marcar els teus hobbies";
-    if ($horari == [])
+    if (empty($horari))
         $errors[] = "Has de marcar un horari";
 
 }
-/*else {
-    $errors[] = "No s'ha enviat el formulari";
-}*/
 
 ?>
 
@@ -70,6 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>405</title>
 </head>
 <body>
+<?php if (!count($errors)==0) : ?>
+<?php foreach ($errors as $error)
+echo $error."<br>"
+?>
+<?php endif;?>
+<?php if(!$isPost || !empty($errors)) :?>
 <form action="406formulariUnic.php" method="POST">
     <p>
         <label for="name">Nom :</label>
@@ -126,6 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </p>
     <input type="submit">
 </form>
+<?php endif;?>
 <?php if (count($errors)==0 && $isPost) :?>
     <table>
         <tr>
@@ -157,10 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <td><?=$strHorari?></td>
         </tr>
     </table>
-<?php else : ?>
-    <?php foreach ($errors as $error)
-        echo $error."<br>"
-    ?>
+
 <?php endif; ?>
 
 
