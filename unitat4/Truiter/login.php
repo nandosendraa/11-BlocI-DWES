@@ -30,14 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>406</title>
-</head>
-<body>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>405</title>
+    <title>422</title>
 </head>
 <body>
 <?php if (!count($errors)==0) : ?>
