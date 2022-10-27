@@ -8,26 +8,46 @@ include "src/Video.php";
 $misatge = "";
 $twitter = new Twitter();
 
-if(empty($_COOKIE['iniciat'])) {
-    $misatge = "Benvingut per primera vegada";
-    setcookie('iniciat', (string) time(),time()+ 604800);
-}
+
+//Act 430
+//if(empty($_COOKIE['iniciat'])) {
+//    $misatge = "Benvingut per primera vegada";
+//    setcookie('iniciat', (string) time(),time()+ 604800);
+//}
+//else {
+//    setcookie('iniciat', (string) time(),time()+ 604800);
+//    $misatge = "La ultima vegada que vas iniciar va ser: ".date('d-m-Y h:i:s',$_COOKIE['iniciat']);
+//}
+
+//Act 434
+session_start();
+//comprovem si es post per saber si s'ha apretat el boto de borrar
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+    unset($_SESSION['iniciat']);
+//comprovem si s'ha iniciat alguna vegada
+if (empty($_SESSION['iniciat']))
+    $misatge = "Benvingut per primera vegada <br>";
 else {
-    setcookie('iniciat', (string) time(),time()+ 604800);
-    $misatge = "La ultima vegada que vas iniciar va ser: ".date('d-m-Y h:i:s',$_COOKIE['iniciat']);
+    $misatge = "Ultimes visites :<br><ul>";
+    foreach ($_SESSION['iniciat'] as $iniciat) {
+        $misatge .= "<li>".date('d-m-Y h:i:s',$iniciat)."</li>" ;
+    }
+    $misatge .= "</ul>";
 }
+
+$_SESSION['iniciat'][] = time();
 
 $user = new User('Bart Simpson', 'bart');
 $twitter->addUser($user);
 
 // fem un delay de 4 segons perquè les dates de creació no coincidisquen
-sleep(4);
+//sleep(4);
 $userH = new User('Homer Simpson', 'homerj');
 $twitter->addUser($userH);
 
 $users = $twitter->getUsers();
 
-sleep(4);
+//sleep(4);
 $tweet = new Tweet('Hola món!', $user);
 $video = new Video('Vídeo 1', 1080, 1024, 25);
 $photo = new Photo('Foto 1', 1080, 1024, 'Text alternatiu');
@@ -77,4 +97,9 @@ $tweets = $twitter->getTweets();
     <hr/>
 <?php endforeach; ?>
         <h3>Misatges</h3>
-        <p><?= $misatge?></>
+        <p><?= $misatge?></p>
+<?php if (!empty($_SESSION['iniciat'])) :?>
+    <form action="index.php" method="post">
+        <input type="submit" name="borrar" value="Borrar">
+    </form>
+<?php endif;?>
