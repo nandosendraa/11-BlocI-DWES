@@ -24,6 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 }
+if(!$isPost || !empty($errors)){
+    session_start();
+    $_SESSION['user'] = $user;
+}
 
 ?>
 <!DOCTYPE html>
@@ -41,11 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php if(!$isPost || !empty($errors)) :?>
     <form action="login.php" method="POST">
         <p>
-            <label for="name">Usuari :</label>
+            <label for="user">Usuari :</label>
             <input type="text" id="user" name="user" <?php if ($user != ""):?>value="<?=$user?>"<?php endif; ?>>
         </p>
         <p>
-            <label for="name">Contrasenya :</label>
+            <label for="password">Contrasenya :</label>
             <input type="text" id="password" name="password" <?php if ($password != ""):?>value="<?=$password?>"<?php endif; ?>>
         </p>
         <input type="submit" name="Enviar">
@@ -53,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php endif;?>
 <?php if (count($errors)==0 && $isPost) :?>
     <h2>Benvingut <?=$user?>!!</h2>
+    <p>Polse <a href="logout.php">ací</a> per a eixir</p>
 <?php endif;?>
 </body>
 </html>
