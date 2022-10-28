@@ -24,6 +24,10 @@ session_start();
 //comprovem si es post per saber si s'ha apretat el boto de borrar
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
     unset($_SESSION['iniciat']);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 391f288 (NewTweet)
 //comprovem si s'ha iniciat alguna vegada
 if (empty($_SESSION['iniciat']))
     $misatge = "Benvingut per primera vegada <br>";
@@ -96,10 +100,19 @@ $tweets = $twitter->getTweets();
     <?php endif ;?>
     <hr/>
 <?php endforeach; ?>
+<<<<<<< HEAD
         <h3>Misatges</h3>
         <p><?= $misatge?></p>
+=======
+    <h3>Misatges</h3>
+    <p><?= $misatge?></p>
+>>>>>>> 391f288 (NewTweet)
 <?php if (!empty($_SESSION['iniciat'])) :?>
     <form action="index.php" method="post">
         <input type="submit" name="borrar" value="Borrar">
     </form>
+<<<<<<< HEAD
 <?php endif;?>
+=======
+<?php endif;?>
+>>>>>>> 391f288 (NewTweet)
