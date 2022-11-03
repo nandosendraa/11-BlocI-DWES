@@ -1,3 +1,4 @@
+<?php session_start()?>
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -12,9 +13,17 @@
     <div class="row">
         <div class="col-2 border d-flex flex-column justify-content-between">
             <?php require "partials/sidebar.php" ?>
+<!--            --><?php //require "../login-process.php" ?>
         </div>
         <div class="col-7 border p-4">
             <h2>Inici de sessió</h2>
+            <ul>
+            <?php if(!empty($_SESSION['errors'])) :?>
+                <?php foreach ($_SESSION['errors'] as $error) :?>
+                    <li><?=$error?></li>
+                <?php endforeach;?>
+                <?php endif;?>
+
             <form class="mb-4" method="post" action="login-process.php">
                 <label for="usuario" class="form-label"">Usuari</label>
                     <input id="usuario mb-2" class="form-control" name="username" >

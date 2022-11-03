@@ -12,7 +12,7 @@
 <main class="mt-4 container">
     <div class="row">
         <div class="position-fixed col-2 d-flex flex-column justify-content-between h-75">
-            <?php require 'partials\sidebar.php'?>
+            <?php require "partials/sidebar.php" ?>
         </div>
         <div class="offset-2 col-6 border-start border-end border-1 p-4">
             <h1>Welcome to Truiter</h1>
@@ -23,9 +23,6 @@
                 <p><?= $user->getName() ?> (@<?= $user->getUsername() ?>) - Creation
                     date: <?= $user->getCreatedAt()->format('d-m-Y h:i:s') ?></p>
             <?php endforeach; ?>
-            <?php if (!empty($_SESSION["user"])) : ?>
-                <?php require '../tweet-new.php'?>
-            <? endif;?>
 
             <h2>Tweets</h2>
 
