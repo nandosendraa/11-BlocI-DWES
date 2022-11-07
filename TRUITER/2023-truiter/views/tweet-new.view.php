@@ -1,3 +1,4 @@
+<?php session_start()?>
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -14,8 +15,8 @@
         </div>
         <div class="col-7 border p-4">
             <h2>Nou truit</h2>
-            <form class="mb-4">
-                <textarea class="form-control mb-2" placeholder="Què passa, [nom d'usuari]?"></textarea>
+            <form class="mb-4" action="tweet-new-process.php" method="POST">
+                <textarea class="form-control mb-2" id="tweetText" placeholder="Què passa, <?=$_SESSION['user']?>?"></textarea>
                 <input type="file" class="form-control mb-2" >
                 <button class="btn btn-primary">Tuit with image</button>
             </form>

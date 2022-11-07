@@ -9,6 +9,7 @@ use App\Video;
 
 require_once 'autoload.php';
 
+
 $twitter = new Twitter();
 
 $user = new User('Bart Simpson', 'bart');

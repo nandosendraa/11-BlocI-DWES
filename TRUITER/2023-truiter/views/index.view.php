@@ -16,6 +16,11 @@
         </div>
         <div class="offset-2 col-6 border-start border-end border-1 p-4">
             <h1>Welcome to Truiter</h1>
+            <?php if (!empty($_SESSION['user'])):?>
+            <form action="tweet-new.php" method="get">
+            <button class="btn btn-primary">Nou Truit</button>
+            </form>
+            <?php endif;?>
 
             <p><?= $twitter->getNumberOfUsers() ?> users, <?= $twitter->getNumberOfTweets() ?> tweets.</p>
             <h2>Users</h2>

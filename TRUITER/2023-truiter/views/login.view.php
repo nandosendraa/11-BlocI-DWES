@@ -13,7 +13,6 @@
     <div class="row">
         <div class="col-2 border d-flex flex-column justify-content-between">
             <?php require "partials/sidebar.php" ?>
-<!--            --><?php //require "../login-process.php" ?>
         </div>
         <div class="col-7 border p-4">
             <h2>Inici de sessió</h2>

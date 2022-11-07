@@ -1,2 +1,13 @@
 <?php
-// ací va la lògica per a processar el formulari de creació de tuits
+use App\Photo;
+use App\Tweet;
+use App\Twitter;
+use App\User;
+use App\Video;
+$tweetText = '';
+
+//$userT = new User($_SESSION['user'],$_SESSION['user']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $tweetText = $_POST['tweetText'];
+    echo $tweetText;
+}

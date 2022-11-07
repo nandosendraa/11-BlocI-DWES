@@ -24,24 +24,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($password))
         $errors[] = "Has de introduir la contrasenya";
 
-    if ($usuario !== $usuaris['usuario']) {
-        $errors[] = "L'usuari no es correcte";
+    if (!empty($usuario)) {
+        if ($usuario !== $usuaris['usuario']) {
+            $errors[] = "L'usuari no es correcte";
+        }
     }
-
-    if ($password !== $usuaris['password']) {
-        $errors[] = "La contrasenya no es correcta";
+    if (!empty($usuario)) {
+        if ($password !== $usuaris['password']) {
+            $errors[] = "La contrasenya no es correcta";
+        }
     }
 
 }
 
-if (!empty($errors)){
+if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
-    header('Location: index.php');
-//    echo '<ul>';
-//    foreach ($errors as $error){
-//        echo '<li>'.$error.'</li>';
-//    }
-//    echo '</ul>';
+    header('Location: login.php');
 }
 
 if (empty($errors)) {
