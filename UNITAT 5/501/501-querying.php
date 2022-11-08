@@ -28,11 +28,9 @@
     var_dump($statementD->fetchAll());
     echo '<br>';
 
-    $statementE = $pdo->prepare("SELECT id,title FROM movie WHERE title= :title");
+    $statementE = $pdo->prepare("SELECT id,title FROM movie WHERE title LIKE :title");
     $statementE->setFetchMode(PDO::FETCH_ASSOC);
-    $title="%te%";
-    $statementE->bindValue(':title',$title);
-    $statementE->execute();
+    $statementE->execute(['title' => "%te%"]);
     echo 'Consulta E <br>';
     var_dump($statementE->fetchAll());
     echo '<br>';
