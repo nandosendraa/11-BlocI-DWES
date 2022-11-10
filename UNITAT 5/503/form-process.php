@@ -5,7 +5,8 @@ session_start();
 $isPost = false;
 $errors = [];
 $pdo = new PDO("mysql:host=localhost; dbname=503", "root", "root");
-
+$hobbies_id = [];
+$times_id = [];
 
 $data["name"] = "";
 $data["email"] = "";
@@ -103,6 +104,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else
         $errors[] = "El contact time es obligatori";
 }
+foreach ($selectedHobbies as $hobby) {
+    if ($hobby == "reading")
+        $hobby_id=1;
+    else if ($hobby == "programming")
+        $hobby_id=2;
+    else if ($hobby == "cycling")
+        $hobby_id=3;
+    else if ($hobby == "running")
+        $hobby_id=4;
+    else if ($hobby == "basket")
+        $hobby_id=5;
+    else if ($hobby == "cooking")
+        $hobby_id=6;
+    else if ($hobby == "fishing")
+        $hobby_id=7;
+    $hobbies_id[]= $hobby_id;
+}
+
+foreach ($selectedTime as $time) {
+    if ($time == "morning")
+        $time_id=1;
+    else if ($time == "before_lunch")
+        $time_id=2;
+    else if ($time == "after_lunch")
+        $time_id=3;
+    else if ($time == "evening")
+        $time_id=4;
+    $times_id[]= $time_id;
+}
 
  if ($isPost == false || !empty($errors)) {
      $_SESSION["errors"] = $errors;
@@ -118,8 +148,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      $stmt->bindParam(':url', $data['url']);
      $stmt->bindParam('id_genre',$genre_id);
      $stmt->execute();
-     header('Location: form-success.php');
+     $user_id= $pdo->lastInsertId();
+     foreach ($hobbies_id as $id){
+         $hobby_stmt = $pdo->prepare("INSERT INTO contact_info_hobby (id_contact_info, id_hobby) VALUES (:id_contact_info, :id_hobby)");
+         $hobby_stmt->bindValue(':id_contact_info', $user_id);
+         $hobby_stmt->bindValue(':id_hobby', $id);
+         $hobby_stmt->execute();
+
+     }
+     foreach ($times_id as $id){
+         $times_stmt = $pdo->prepare("INSERT INTO contact_info_contact_time (id_contact_info, id_contact_time) VALUES (:id_contact_info, :id_time)");
+         $times_stmt->bindValue(':id_contact_info', $user_id);
+         $times_stmt->bindValue(':id_time', $id);
+         $times_stmt->execute();
+
+     }
      exit();
  }
-
 
