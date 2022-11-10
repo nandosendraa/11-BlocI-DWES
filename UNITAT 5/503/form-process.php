@@ -133,7 +133,6 @@ foreach ($selectedTime as $time) {
         $time_id=4;
     $times_id[]= $time_id;
 }
-
  if ($isPost == false || !empty($errors)) {
      $_SESSION["errors"] = $errors;
      $_SESSION["data"] = $data;
