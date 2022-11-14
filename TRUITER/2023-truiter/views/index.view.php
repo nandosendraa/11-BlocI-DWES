@@ -25,27 +25,23 @@
             <p><?= $twitter->getNumberOfUsers() ?> users, <?= $twitter->getNumberOfTweets() ?> tweets.</p>
             <h2>Users</h2>
             <?php foreach ($users as $user) : ?>
-                <p><?= $user->getName() ?> (@<?= $user->getUsername() ?>) - Creation
-                    date: <?= $user->getCreatedAt()->format('d-m-Y h:i:s') ?></p>
+                <p><?= $user['name'] ?> (@<?= $user['username'] ?>) - Creation
+                    date: <?= $user['created_at'] ?></p>
             <?php endforeach; ?>
 
             <h2>Tweets</h2>
 
             <?php foreach ($tweets as $tweet) : ?>
-
-                <?php $tweetUser = $tweet->getAuthor() ?>
-                <p><?= $tweetUser->getName() ?> (@<?= $tweetUser->getUsername() ?>) - Creation
-                    date: <?= $tweet->getCreatedAt()->format('d-m-Y h:i:s') ?></p>
-                <blockquote><?= $tweet->getText() ?></blockquote>
-                <p>Like counter: <?= $tweet->getLikeCount(); ?></p>
-                <?php if (count($tweet->getAttachments()) > 0) : ?>
-                    <h3>Attachments</h3>
-                    <ul>
-                        <?php foreach ($tweet->getAttachments() as $attachment) : ?>
-                            <li><?= $attachment->getSummary() ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif ;?>
+                <?php
+                    $stmt = $pdo->prepare("SELECT * FROM user WHERE id LIKE :id");
+                    $stmt->bindValue(':id',$tweet['user_id']);
+                    $stmt->execute();
+                    $tweetUser = $stmt->fetch();
+                ?>
+                <p><?= $tweetUser['name'] ?> (@<?= $tweetUser['username'] ?>) - Creation
+                    date: <?= $tweet['created_at']?></p>
+                <blockquote><?= $tweet['text'] ?></blockquote>
+                <p>Like counter: <?= $tweet['like_count']; ?></p>
                 <hr/>
             <?php endforeach; ?>
         </div>
@@ -54,3 +50,7 @@
 </main>
 </body>
 </html>
+
+<!--
+
+ -->

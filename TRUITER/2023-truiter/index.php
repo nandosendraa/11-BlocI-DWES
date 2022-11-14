@@ -1,5 +1,6 @@
 <?php
 session_start();
+$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", "root");
 
 use App\Photo;
 use App\Tweet;
@@ -21,7 +22,10 @@ $userH = new User('Homer Simpson', 'homerj');
 
 $twitter->addUser($userH);
 
-$users = $twitter->getUsers();
+$stmt = $pdo->prepare("SELECT * FROM user");
+$stmt->execute();
+$stmt->setFetchMode(PDO::FETCH_ASSOC);
+$users = $stmt->fetchAll();
 
 
 $tweet = new Tweet('Hola món!', $user);
@@ -51,7 +55,12 @@ $twitter->addTweet($tweet);
 
 $tweet = new Tweet("I’ve learned that life is one crushing defeat after another until you just wish Flanders was dead.", $userH);
 $twitter->addTweet($tweet);
+$stmt = $pdo->prepare("SELECT * FROM tweet");
+$stmt->execute();
+$stmt->setFetchMode(PDO::FETCH_ASSOC);
 
-$tweets = $twitter->getTweets();
+$tweets = $stmt->fetchAll();
+
+//var_dump($tweets);
 
 require 'views/index.view.php';
