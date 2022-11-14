@@ -9,6 +9,6 @@ $tweetText = '';
 //$userT = new User($_SESSION['user'],$_SESSION['user']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     var_dump($_POST);
-    //$tweetText = $_POST['tweetText'];
+    //$tweetText = $_POST['tweetText'];  POST no em retorna res i no trobe el motiu
     echo $tweetText;
 }
