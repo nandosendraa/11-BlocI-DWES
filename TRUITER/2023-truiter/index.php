@@ -1,6 +1,9 @@
 <?php
 session_start();
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", "root");
+
+    $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root");
+
+
 
 use App\Photo;
 use App\Tweet;

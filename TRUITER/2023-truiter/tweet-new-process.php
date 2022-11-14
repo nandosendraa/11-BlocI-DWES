@@ -8,6 +8,7 @@ $tweetText = '';
 
 //$userT = new User($_SESSION['user'],$_SESSION['user']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $tweetText = $_POST['tweetText'];
+    var_dump($_POST);
+    //$tweetText = $_POST['tweetText'];
     echo $tweetText;
 }
