@@ -15,26 +15,30 @@
             <?php require "partials/sidebar.php" ?>
         </div>
         <div class="col-7 border p-4">
-            <h2>Inici de sessió</h2>
+            <h2>Registre</h2>
             <ul>
-            <?php if(!empty($_SESSION['errors'])) :?>
-                <?php foreach ($_SESSION['errors'] as $error) :?>
-                    <li><?=$error?></li>
-                <?php endforeach;?>
+                <?php if(!empty($_SESSION['errors'])) :?>
+                    <?php foreach ($_SESSION['errors'] as $error) :?>
+                        <li><?=$error?></li>
+                    <?php endforeach;?>
                 <?php endif;?>
 
-            <form class="mb-4" method="post" action="login-process.php">
-                <label for="usuario" class="form-label"">Usuari</label>
+                <form class="mb-4" method="post" action="register-process.php">
+                    <label for="nom" class="form-label"">Nom</label>
+                    <input id="nom mb-2" class="form-control" name="nom" >
+
+                    <label for="usuario" class="form-label"">Usuari</label>
                     <input id="usuario mb-2" class="form-control" name="username" >
 
-                <label for="password" class="form-label">Contrasenya</label>
+                    <label for="password" class="form-label">Contrasenya</label>
                     <input id="password" class="form-control mb-2" name="password">
 
+                    <label for="passwordRepeat" class="form-label">Repetir Contrasenya</label>
+                    <input id="passwordRepeat" class="form-control mb-2" name="passwordRepeat">
 
-                <button class="btn btn-primary">Iniciar sessió</button>
-                <br>
-                <a href="register.php">Registrat</a>
-            </form>
+
+                    <button class="btn btn-primary">Registrar</button>
+                </form>
 
         </div>
         <div class="col-3 border"></div>

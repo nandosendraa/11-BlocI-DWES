@@ -16,7 +16,7 @@
         <div class="col-7 border p-4">
             <h2>Nou truit</h2>
             <form class="mb-4" method="post" action="tweet-new-process.php" >
-                <textarea class="form-control mb-2" id="tweetText" placeholder="Què passa, <?=$_SESSION['user']?>?"></textarea>
+                <textarea class="form-control mb-2" id="tweetText" name="tweetText" placeholder="Què passa, <?=$_SESSION['user']?>?"></textarea>
                 <input type="file" class="form-control mb-2" >
                 <button class="btn btn-primary">Tuit with image</button>
             </form>

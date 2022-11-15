@@ -5,8 +5,7 @@ use App\Tweet;
 use App\Twitter;
 use App\User;
 use App\Video;
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root");
-//$usuaris = ['usuario' => 'nando', 'password' => '1234a'];
+$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", "root");
 $errors = [];
 $isPost = false;
 $usuario = "";
@@ -32,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($usuaris['username']!=$usuario) {
             $errors[] = "L'usuari no es correcte";
         }
-        if ($usuaris['password']!=$password) {
+        if (!password_verify($password,$usuaris['password'])) {
             $errors[] = "La contrasenya no es correcta";
         }
     }else
