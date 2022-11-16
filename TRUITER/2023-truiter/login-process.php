@@ -20,6 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindValue(":username",$usuario);
     $stmt->execute();
     $usuaris = $stmt->fetch();
+    $nom = $usuaris['name'];
+    $id = $usuaris['id'];
 
     if (empty($usuario))
         $errors[] = "Has de introduir l'usuari";
@@ -46,5 +48,7 @@ if (!empty($errors)) {
 if (empty($errors)) {
     unset($_SESSION['errors']);
     $_SESSION['user'] = $usuario;
+    $_SESSION['nom'] = $nom;
+    $_SESSION['id'] = $id;
     header('Location: index.php');
 }

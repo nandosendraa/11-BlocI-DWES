@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($usuario))
         $errors[] = "Has de introduir l'usuari";
 
-    if (strlen($usuario)>50)
+    if (strlen($usuario)>15)
         $errors[] = "L'usuari es masa gran";
 
     if (strlen($password) < 8 || strlen($password) > 16)
