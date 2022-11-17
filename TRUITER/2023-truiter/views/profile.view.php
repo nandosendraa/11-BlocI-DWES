@@ -33,8 +33,8 @@
 
                 <button class="btn btn-primary">Guardar Canvis</button>
             </form>
-                <form>
-                    <button class="btn btn-primary">ELIMINAR CUENTA</button>
+                <form method="get" action="confirmar.php">
+                    <button class="btn btn-danger">ELIMINAR CUENTA</button>
                 </form>
         </div>
         <div class="col-3 border"></div>

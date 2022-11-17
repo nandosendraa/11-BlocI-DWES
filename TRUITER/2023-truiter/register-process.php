@@ -63,6 +63,8 @@ if (!empty($errors)) {
 if (empty($errors)) {
     unset($_SESSION['errors']);
     $_SESSION['user'] = $usuario;
+    $_SESSION['nom'] = $nom;
+
     try {
         $stmt = $pdo->prepare("INSERT INTO user (name, username, password, created_at, verified) VALUES (:name, :username, :password, :created_at, :verified)");
         $stmt->bindParam(':name', $nom);
@@ -75,5 +77,6 @@ if (empty($errors)) {
     catch (PDOException $e){
         $e->getMessage();
     }
+    $_SESSION['id'] = $pdo->lastInsertId();
     header('Location: index.php');
 }

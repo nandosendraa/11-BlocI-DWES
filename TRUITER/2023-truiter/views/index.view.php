@@ -15,14 +15,17 @@
             <?php require "partials/sidebar.php" ?>
         </div>
         <div class="offset-2 col-6 border-start border-end border-1 p-4">
-            <h1>Welcome to Truiter</h1>
+
             <?php if (!empty($_SESSION['user'])):?>
+                <h1>Welcome to Truiter, @<?=$_SESSION['user']?></h1>
                 <form action="tweet-new.php" method="get">
                     <button class="btn btn-primary">Nou Truit</button>
                 </form>
+            <?php else:?>
+                <h1>Welcome to Truiter</h1>
             <?php endif;?>
 
-            <p><?= $twitter->getNumberOfUsers() ?> users, <?= $twitter->getNumberOfTweets() ?> tweets.</p>
+
             <h2>Users</h2>
             <?php foreach ($users as $user) : ?>
                 <p><?= $user['name'] ?> (@<?= $user['username'] ?>) - Creation
