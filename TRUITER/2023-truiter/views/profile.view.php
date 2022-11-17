@@ -32,10 +32,8 @@
 
 
                 <button class="btn btn-primary">Guardar Canvis</button>
+                <a class="btn btn-danger" href="confirmar.php">ELIMINAR CUENTA</a>
             </form>
-                <form method="get" action="confirmar.php">
-                    <button class="btn btn-danger">ELIMINAR CUENTA</button>
-                </form>
         </div>
         <div class="col-3 border"></div>
     </div>

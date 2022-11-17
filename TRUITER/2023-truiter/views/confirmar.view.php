@@ -17,11 +17,10 @@
         <div class="col-7 border p-4">
             <h2>Segur que vols eliminar la cuenta?</h2>
             <p>Tens <?=$numberOfTweets?> tweets en aquesta cuenta</p>
+            <hr>
                 <form class="mb-4" method="get" action="logout.php">
                     <button class="btn btn-danger">Si</button>
-                </form>
-                <form method="post" action="index.php">
-                    <button class="btn btn-primary">No</button>
+                    <a class="btn btn-primary" href="index.php">No</a>
                 </form>
         </div>
         <div class="col-3 border"></div>
