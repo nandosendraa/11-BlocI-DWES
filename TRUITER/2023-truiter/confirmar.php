@@ -1,8 +1,10 @@
 <?php
 session_start();
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", "root");
+use App\FlashMessage;
+require 'src/App/FlashMessage.php';
+$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root");
 $stmt = $pdo->prepare('SELECT id FROM tweet WHERE user_id LIKE :id');
-$stmt->bindParam(":id", $_SESSION['id']);
+$stmt->bindValue(":id",FlashMessage::get('id'));
 $stmt->execute( );
 $numberOfTweets = count($stmt->fetchAll());
 require 'views/confirmar.view.php';

@@ -1,4 +1,6 @@
-<?php session_start()?>
+<?php session_start();
+require ('src/App/FlashMessage.php');
+use App\FlashMessage;?>
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -12,16 +14,17 @@
 <main class="border-top mt-4 border-4 border-primary container">
     <div class="row">
         <div class="col-2 border d-flex flex-column justify-content-between">
-            <?php require "partials/sidebar.php" ?>
+            <?php require "partials/sidebar.php";?>
         </div>
         <div class="col-7 border p-4">
             <h2>Registre</h2>
             <ul>
-                <?php if(!empty($_SESSION['errors'])) :?>
-                    <?php foreach ($_SESSION['errors'] as $error) :?>
+                <?php if(!empty(FlashMessage::get('errors',[]))) :?>
+                    <?php foreach (FlashMessage::get('errors',[]) as $error) :?>
                         <li><?=$error?></li>
                     <?php endforeach;?>
                 <?php endif;?>
+                <?php FlashMessage::unset('errors');?>
 
                 <form class="mb-4" method="post" action="register-process.php">
                     <label for="nom" class="form-label"">Nom</label>

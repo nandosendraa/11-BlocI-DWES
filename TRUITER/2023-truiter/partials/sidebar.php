@@ -1,3 +1,7 @@
+<?php
+use App\FlashMessage;
+//require ('src/App/FlashMessage.php');
+?>
 <nav class="navbar navbar-light flex-column align-items-start">
     <a class="ms-3 navbar-brand" href="#">
         <img src="assets/eggcracked_2.svg" alt="" width="50" height="50">
@@ -12,12 +16,12 @@
 </nav>
 <nav>
     <ul class="nav flex-column">
-        <?php if (!empty($_SESSION["user"])) : ?>
+        <?php  if(!empty(FlashMessage::get('user',[]))) : ?>
             <form action="logout.php" method="post">
                 <button class="btn btn-primary">Tancar Sessió</button>
             </form>
             <li class="nav-item"><a class="nav-link" href="profile.php"><i class="bi bi-person-fill"></i>
-                    <?=$_SESSION["user"]?> </a></li>
+                    <?=FlashMessage::get('user',[])?> </a></li>
         <?php else : ?>
 
             <li class="nav-item"><a class="nav-link" href="login.php"><i class="bi bi-box-arrow-in-right"></i> Iniciar

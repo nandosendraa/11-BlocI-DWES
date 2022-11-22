@@ -5,12 +5,15 @@ use App\Tweet;
 use App\Twitter;
 use App\User;
 use App\Video;
+use App\FlashMessage;
+require 'src/App/FlashMessage.php';
 $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", "root");
 $errors = [];
 $isPost = false;
 $username = "";
+$id = FlashMessage::get('id');
 $name= "";
-unset($_SESSION['errors']);
+FlashMessage::unset('errors');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isPost = true;
@@ -38,25 +41,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (!empty($errors)) {
-    $_SESSION['errors'] = $errors;
+    FlashMessage::set('errors',$errors);
     header('Location: profile.php');
 }
 
 if (empty($errors)) {
-    unset($_SESSION['errors']);
+    FlashMessage::unset('errors');
     if (!empty($username)) {
         $stmt = $pdo->prepare("UPDATE user SET username = :username WHERE id = :id");
             $stmt->bindParam(":username",$username);
-            $stmt->bindParam(":id",$_SESSION['id']);
+            $stmt->bindParam(":id",$id);
         $stmt->execute();
-        $_SESSION['user'] = $username;
+        FlashMessage::set('user',$username);
     }
     if (!empty($name)) {
         $stmt = $pdo->prepare("UPDATE user SET name = :name WHERE id = :id");
         $stmt->bindParam(":name",$name);
-        $stmt->bindParam(":id",$_SESSION['id']);
+        $stmt->bindParam(":id",$id);
         $stmt->execute();
-        $_SESSION['nom'] = $name;
+        FlashMessage::set('nom',$name);
     }
    header('Location: index.php');
 }

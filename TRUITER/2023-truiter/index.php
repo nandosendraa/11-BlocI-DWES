@@ -1,17 +1,26 @@
 <?php
 session_start();
 
-    $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
-
-
+    $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root");
 
 use App\Photo;
 use App\Tweet;
 use App\Twitter;
 use App\User;
 use App\Video;
+//use App\FlashMessage;
 
-require_once 'autoload.php';
+
+require ('src/App/Twitter.php');
+require ('src/App/User.php');
+require ('src/App/Tweet.php');
+require ('src/App/Media.php');
+require ('src/App/Video.php');
+require ('src/App/Photo.php');
+//require ('src/App/FlashMessage.php');
+
+
+
 
 
 $twitter = new Twitter();
@@ -39,7 +48,7 @@ $tweet->addAttachment($photo);
 
 
 try {
-    $photo = new Photo('Foto 1', 250, 1024, 'Text alternatiu');
+    $photo = new Photo('Foto 1', 300, 1024, 'Text alternatiu');
     $tweet->addAttachment($photo);
 }
 catch (\App\Exceptions\InvalidWidthMediaException $exception) {
@@ -65,5 +74,5 @@ $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $tweets = $stmt->fetchAll();
 
 //var_dump($tweets);
-
 require 'views/index.view.php';
+

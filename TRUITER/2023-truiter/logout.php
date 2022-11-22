@@ -1,17 +1,20 @@
 <?php
 $msg = "";
 session_start();
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", "root");
+require('src/App/FlashMessage.php');
+use App\FlashMessage;
+
+$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root");
 if ($_SERVER['REQUEST_METHOD'] === 'GET'){
         $stmt = $pdo->prepare("DELETE FROM `tweet` WHERE user_id LIKE :id");
-            $stmt->bindValue(":id", $_SESSION['id']);
+            $stmt->bindValue(":id", FlashMessage::get('id',[]));
         $stmt->execute( );
 
         $stmt = $pdo->prepare("DELETE FROM `user` WHERE username LIKE :username");
-            $stmt->bindValue(":username", $_SESSION['user']);
+            $stmt->bindValue(":username", FlashMessage::get('user'.[]));
         $stmt->execute();
 }
-if (empty($_SESSION['user']))
+if (empty(FlashMessage::get('user',[])))
     $msg='<p>Primer has de <a href="login.php">logar-te</a></p>';
 else {
     session_unset();

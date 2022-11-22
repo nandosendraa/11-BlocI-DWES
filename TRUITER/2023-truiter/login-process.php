@@ -1,17 +1,21 @@
 <?php
 session_start();
+
 use App\Photo;
 use App\Tweet;
 use App\Twitter;
 use App\User;
 use App\Video;
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", "root");
+use App\FlashMessage;
+require ('src/App/FlashMessage.php');
+
+$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root");
 $errors = [];
 $isPost = false;
 $usuario = "";
 $password = "";
-$_SESSION['user'] = '';
-unset($_SESSION['errors']);
+FlashMessage::unset('users');
+FlashMessage::unset('errors');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isPost = true;
     $usuario = $_POST["username"];
@@ -20,8 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindValue(":username",$usuario);
     $stmt->execute();
     $usuaris = $stmt->fetch();
-    $nom = $usuaris['name'];
-    $id = $usuaris['id'];
+
+    if($usuaris) {
+        $nom = $usuaris['name'];
+        $id = $usuaris['id'];
+    }
 
     if (empty($usuario))
         $errors[] = "Has de introduir l'usuari";
@@ -29,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($password))
         $errors[] = "Has de introduir la contrasenya";
 
-    if ($usuaris != false) {
+    if ($usuaris) {
         if ($usuaris['username']!=$usuario) {
             $errors[] = "L'usuari no es correcte";
         }
@@ -41,14 +48,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (!empty($errors)) {
-    $_SESSION['errors'] = $errors;
-    header('Location: login.php');
+    FlashMessage::set('errors',$errors);
+    header('Location: Login.php');
 }
 
 if (empty($errors)) {
-    unset($_SESSION['errors']);
-    $_SESSION['user'] = $usuario;
-    $_SESSION['nom'] = $nom;
-    $_SESSION['id'] = $id;
+    FlashMessage::unset('errors');
+    FlashMessage::set('user',$usuario);
+    FlashMessage::set('nom',$nom);
+    FlashMessage::set('id',$id);
     header('Location: index.php');
 }

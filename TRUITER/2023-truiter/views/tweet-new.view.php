@@ -1,4 +1,6 @@
-<?php session_start()?>
+<?php session_start();
+use App\FlashMessage;
+require 'src/App/FlashMessage.php'?>
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -16,7 +18,7 @@
         <div class="col-7 border p-4">
             <h2>Nou truit</h2>
             <form class="mb-4" method="post" action="tweet-new-process.php" >
-                <textarea class="form-control mb-2" id="tweetText" name="tweetText" placeholder="Què passa, <?=$_SESSION['user']?>?"></textarea>
+                <textarea class="form-control mb-2" id="tweetText" name="tweetText" placeholder="Què passa, <?=FlashMessage::get('user',[])?>?"></textarea>
                 <input type="file" class="form-control mb-2" >
                 <button class="btn btn-primary">Tuit with image</button>
             </form>

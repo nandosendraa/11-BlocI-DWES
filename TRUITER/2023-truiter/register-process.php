@@ -5,7 +5,10 @@ use App\Tweet;
 use App\Twitter;
 use App\User;
 use App\Video;
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", "root");
+use App\FlashMessage;
+
+require 'src/App/FlashMessage.php';
+$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root");
 
 $errors = [];
 $isPost = false;
@@ -15,8 +18,8 @@ $verified = 0;
 $password = "";
 $passwordRepeat = "";
 $date = Date("Y-m-d h:i:s");
-$_SESSION['user'] = '';
-unset($_SESSION['errors']);
+FlashMessage::unset('user');
+FlashMessage::unset('errors');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isPost = true;
     $usuario = $_POST["username"];
@@ -56,14 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (!empty($errors)) {
-    $_SESSION['errors'] = $errors;
+    FlashMessage::set('errors',$errors);
     header('Location: register.php');
 }
 
 if (empty($errors)) {
-    unset($_SESSION['errors']);
-    $_SESSION['user'] = $usuario;
-    $_SESSION['nom'] = $nom;
+    FlashMessage::unset('errors');
+    FlashMessage::set('user',$usuario);
+    FlashMessage::set('nom',$nom);
 
     try {
         $stmt = $pdo->prepare("INSERT INTO user (name, username, password, created_at, verified) VALUES (:name, :username, :password, :created_at, :verified)");
