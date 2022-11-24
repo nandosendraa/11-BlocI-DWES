@@ -6,9 +6,9 @@ use App\Twitter;
 use App\User;
 use App\Video;
 use App\FlashMessage;
+require ('autoload.php');
 
-require 'src/App/FlashMessage.php';
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root");
+$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
 
 $errors = [];
 $isPost = false;
@@ -18,8 +18,6 @@ $verified = 0;
 $password = "";
 $passwordRepeat = "";
 $date = Date("Y-m-d h:i:s");
-FlashMessage::unset('user');
-FlashMessage::unset('errors');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isPost = true;
     $usuario = $_POST["username"];
@@ -64,10 +62,6 @@ if (!empty($errors)) {
 }
 
 if (empty($errors)) {
-    FlashMessage::unset('errors');
-    FlashMessage::set('user',$usuario);
-    FlashMessage::set('nom',$nom);
-
     try {
         $stmt = $pdo->prepare("INSERT INTO user (name, username, password, created_at, verified) VALUES (:name, :username, :password, :created_at, :verified)");
         $stmt->bindParam(':name', $nom);
@@ -80,6 +74,6 @@ if (empty($errors)) {
     catch (PDOException $e){
         $e->getMessage();
     }
-    $_SESSION['id'] = $pdo->lastInsertId();
+    $_SESSION['user'] = $usuaris;
     header('Location: index.php');
 }

@@ -1,6 +1,3 @@
-<?php session_start();
-use App\FlashMessage;
-?>
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -19,19 +16,18 @@ use App\FlashMessage;
         <div class="col-7 border p-4">
             <h2>Cuenta</h2>
             <ul>
-                <?php if(!empty(FlashMessage::get('errors',[]))) :?>
-                    <?php foreach (FlashMessage::get('errors',[]) as $error) :?>
+                <?php if(!empty($err)) :?>
+                    <?php foreach ($err as $error) :?>
                         <li><?=$error?></li>
                     <?php endforeach;?>
                 <?php endif;?>
-                <?php FlashMessage::unset('errors');?>
 
             <form class="mb-4" method="post" action="profile-process.php">
                 <label for="usuario" class="form-label"">Nom</label>
-                    <input id="usuario mb-2" class="form-control" name="name" placeholder="<?= FlashMessage::get('nom')?>">
+                    <input id="usuario mb-2" class="form-control" name="name" placeholder="<?= $_SESSION['user']['name']?>">
 
                 <label for="password" class="form-label">Usuari</label>
-                    <input id="password" class="form-control mb-2" name="username" placeholder="<?= FlashMessage::get('user')?>">
+                    <input id="password" class="form-control mb-2" name="username" placeholder="<?= $_SESSION['user']['username']?>">
 
 
                 <button class="btn btn-primary">Guardar Canvis</button>

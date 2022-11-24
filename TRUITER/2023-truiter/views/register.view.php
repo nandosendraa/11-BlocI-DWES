@@ -1,6 +1,3 @@
-<?php session_start();
-require ('src/App/FlashMessage.php');
-use App\FlashMessage;?>
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -19,12 +16,11 @@ use App\FlashMessage;?>
         <div class="col-7 border p-4">
             <h2>Registre</h2>
             <ul>
-                <?php if(!empty(FlashMessage::get('errors',[]))) :?>
-                    <?php foreach (FlashMessage::get('errors',[]) as $error) :?>
+                <?php if(!empty($err)) :?>
+                    <?php foreach ($err as $error) :?>
                         <li><?=$error?></li>
                     <?php endforeach;?>
                 <?php endif;?>
-                <?php FlashMessage::unset('errors');?>
 
                 <form class="mb-4" method="post" action="register-process.php">
                     <label for="nom" class="form-label"">Nom</label>

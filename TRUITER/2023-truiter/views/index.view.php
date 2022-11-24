@@ -1,9 +1,3 @@
-<?php
-use App\FlashMessage;
-require ('src/App/FlashMessage.php');
-if (!key_exists(FlashMessage::SESSION_KEY,$_SESSION))
-    $_SESSION[FlashMessage::SESSION_KEY]=[];
-?>
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -22,8 +16,8 @@ if (!key_exists(FlashMessage::SESSION_KEY,$_SESSION))
         </div>
         <div class="offset-2 col-6 border-start border-end border-1 p-4">
 
-            <?php if (!empty(FlashMessage::get('user',[]))):?>
-                <h1>Welcome to Truiter, @<?=FlashMessage::get('user',[])?></h1>
+            <?php if (!empty($_SESSION['user']['username'])):?>
+                <h1>Welcome to Truiter, @<?=$_SESSION['user']['username']?></h1>
                 <form action="tweet-new.php" method="get">
                     <button class="btn btn-primary">Nou Truit</button>
                 </form>

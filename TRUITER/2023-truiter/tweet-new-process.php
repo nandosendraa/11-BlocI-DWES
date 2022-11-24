@@ -6,10 +6,9 @@ use App\User;
 use App\Video;
 use App\FlashMessage;
 session_start();
-require 'src/App/FlashMessage.php';
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root");
+$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
 $tweetText = '';
-$user = FlashMessage::get('user');
+$user = $_SESSION['user']['username'];
 try {
     $idStmt = $pdo->prepare("SELECT id FROM user WHERE username LIKE :user");
     $idStmt->bindParam(":user", $user);

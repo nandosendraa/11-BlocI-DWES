@@ -7,15 +7,13 @@ use App\Twitter;
 use App\User;
 use App\Video;
 use App\FlashMessage;
-require ('src/App/FlashMessage.php');
+require ('autoload.php');
 
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root");
+$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
 $errors = [];
 $isPost = false;
 $usuario = "";
 $password = "";
-FlashMessage::unset('users');
-FlashMessage::unset('errors');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isPost = true;
     $usuario = $_POST["username"];
@@ -49,13 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if (!empty($errors)) {
     FlashMessage::set('errors',$errors);
-    header('Location: Login.php');
+    header('Location: login.php');
+    exit();
 }
 
 if (empty($errors)) {
-    FlashMessage::unset('errors');
-    FlashMessage::set('user',$usuario);
-    FlashMessage::set('nom',$nom);
-    FlashMessage::set('id',$id);
+    $_SESSION['user'] = $usuaris;
     header('Location: index.php');
+    exit();
 }

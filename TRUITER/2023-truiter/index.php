@@ -1,23 +1,19 @@
 <?php
 session_start();
 
-    $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root");
 
+require ('autoload.php');
 use App\Photo;
 use App\Tweet;
 use App\Twitter;
 use App\User;
 use App\Video;
-//use App\FlashMessage;
+use App\FlashMessage;
 
 
-require ('src/App/Twitter.php');
-require ('src/App/User.php');
-require ('src/App/Tweet.php');
-require ('src/App/Media.php');
-require ('src/App/Video.php');
-require ('src/App/Photo.php');
-//require ('src/App/FlashMessage.php');
+$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
+
+
 
 
 

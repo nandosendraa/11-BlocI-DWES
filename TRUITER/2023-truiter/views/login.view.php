@@ -1,7 +1,3 @@
-<?php session_start()?>
-<?php require ('src/App/FlashMessage.php');
-    use App\FlashMessage;
-?>
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -20,12 +16,11 @@
         <div class="col-7 border p-4">
             <h2>Inici de sessió</h2>
             <ul>
-            <?php if(!empty(FlashMessage::get('errors',[]))) :?>
-                <?php foreach (FlashMessage::get('errors',[]) as $error) :?>
+            <?php if(!empty($err)) :?>
+                <?php foreach ($err as $error) :?>
                     <li><?=$error?></li>
                 <?php endforeach;?>
                 <?php endif;?>
-                <?php FlashMessage::unset('errors');?>
 
             <form class="mb-4" method="post" action="login-process.php">
                 <label for="usuario" class="form-label"">Usuari</label>

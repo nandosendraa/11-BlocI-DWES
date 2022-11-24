@@ -1,4 +1,6 @@
 <?php
+session_start();
 use App\FlashMessage;
-require 'src/App/FlashMessage.php';
-    require 'views/profile.view.php';
+require 'autoload.php';
+$err = FlashMessage::get('errors');
+require 'views/profile.view.php';

@@ -6,14 +6,15 @@ use App\Twitter;
 use App\User;
 use App\Video;
 use App\FlashMessage;
-require 'src/App/FlashMessage.php';
+require ('autoload.php');
+
 $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", "root");
 $errors = [];
 $isPost = false;
 $username = "";
-$id = FlashMessage::get('id');
+$id = $_SESSION['user']['id'];
 $name= "";
-FlashMessage::unset('errors');
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isPost = true;
@@ -46,20 +47,19 @@ if (!empty($errors)) {
 }
 
 if (empty($errors)) {
-    FlashMessage::unset('errors');
     if (!empty($username)) {
         $stmt = $pdo->prepare("UPDATE user SET username = :username WHERE id = :id");
             $stmt->bindParam(":username",$username);
             $stmt->bindParam(":id",$id);
         $stmt->execute();
-        FlashMessage::set('user',$username);
+        $_SESSION['user']['username']= $username;
     }
     if (!empty($name)) {
         $stmt = $pdo->prepare("UPDATE user SET name = :name WHERE id = :id");
         $stmt->bindParam(":name",$name);
         $stmt->bindParam(":id",$id);
         $stmt->execute();
-        FlashMessage::set('nom',$name);
+        $_SESSION['user']['name']= $name;
     }
    header('Location: index.php');
 }
