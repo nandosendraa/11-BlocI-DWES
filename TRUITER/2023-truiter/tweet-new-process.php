@@ -7,6 +7,7 @@ use App\Exceptions\UploadedFileException;
 use App\FlashMessage;
 use App\UploadedFileHandler;
 use App\Helpers\Validator;
+use App\Services\DB;
 
 
 session_start();
@@ -53,14 +54,9 @@ if (!empty($errors)) {
 } else {
 
     try {
-        $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
-        $stmt = $pdo->prepare("INSERT INTO tweet (text, user_id, created_at, like_count) VALUES (:text, :user_id, :created_at, :like_count)");
-
-        $data["user_id"] = $_SESSION["user"]["id"];
-        $data["created_at"] = date("Y-m-d h:i:s");
-        $data["like_count"] = 0;
-
-        $stmt->execute($data);
+        $db = new DB('truiter','root','root');
+        $db->run("INSERT INTO tweet (text, user_id, created_at, like_count) VALUES (:text, :user_id, :created_at, :like_count)",['user_id'=>$_SESSION['user']['id'], 'created_at' => date("Y-m-d h:i:s"),'like_count' => 0]);
+        $pdo = $db->getPDO();
         $id = $pdo->lastInsertId();
 
         if (!empty($newFilename)) {
