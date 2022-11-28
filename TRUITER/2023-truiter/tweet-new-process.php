@@ -6,6 +6,7 @@ use App\Exceptions\NoUploadedFileException;
 use App\Exceptions\UploadedFileException;
 use App\FlashMessage;
 use App\UploadedFileHandler;
+use App\Helpers\Validator;
 
 
 session_start();
@@ -20,11 +21,12 @@ $newFilename = "";
 
 $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-if (!empty($text) && strlen($text) > 1 && strlen($text) <= 280)
+try {
+    Validator::lengthBetween($text, 2, 280);
     $data["text"] = $text;
-else
-    $errors[] = "El text enviat és incorrecte";
-
+} catch (InvalidArgumentException $e) {
+    $errors[] = $e->getMessage();
+}
 $validTypes = ["image/jpeg", "image/jpg", "image/png"];
 
 if (empty($errors)) {
