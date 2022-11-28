@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once 'autoload.php';
+require_once 'bootstrap.php';
 
 use App\Exceptions\NoUploadedFileException;
 use App\Exceptions\UploadedFileException;
@@ -8,9 +8,6 @@ use App\FlashMessage;
 use App\UploadedFileHandler;
 use App\Helpers\Validator;
 use App\Services\DB;
-
-
-session_start();
 
 const UPLOAD_PATH = "uploads";
 const MAX_SIZE = 1024 * 1024 * 3;
@@ -54,7 +51,6 @@ if (!empty($errors)) {
 } else {
 
     try {
-        $db = new DB('truiter','root','root');
         $db->run("INSERT INTO tweet (text, user_id, created_at, like_count) VALUES (:text, :user_id, :created_at, :like_count)",['user_id'=>$_SESSION['user']['id'], 'created_at' => date("Y-m-d h:i:s"),'like_count' => 0]);
         $pdo = $db->getPDO();
         $id = $pdo->lastInsertId();
