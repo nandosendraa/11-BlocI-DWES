@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Services\PhotoRepository;
 use App\Services\TweetRepository;
 use App\Services\UserRepository;
 use InvalidArgumentException;
@@ -24,6 +25,7 @@ class Registry
         self::DB,
         TweetRepository::class,
         UserRepository::class,
+        PhotoRepository::class,
         "logger"
     ];
 

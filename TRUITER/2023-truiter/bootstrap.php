@@ -28,5 +28,5 @@ Registry::set(TweetRepository::class, $tweetRepository);
 $userRepository = new UserRepository();
 Registry::set(UserRepository::class, $userRepository);
 
-//$photoRepository = new PhotoRepository();
-//Registry::set(PhotoRepository::class, $photoRepository);
+$photoRepository = new PhotoRepository();
+Registry::set(PhotoRepository::class, $photoRepository);

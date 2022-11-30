@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Helpers;
 
 use App\Helpers\Exceptions\InvalidTypeUploadedFileException;
 use App\Helpers\Exceptions\NoUploadedFileException;

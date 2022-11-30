@@ -2,18 +2,27 @@
 declare(strict_types=1);
 require_once 'bootstrap.php';
 
-use App\Exceptions\NoUploadedFileException;
-use App\Exceptions\UploadedFileException;
-use App\FlashMessage;
-use App\UploadedFileHandler;
+use App\Helpers\Exceptions\NoUploadedFileException;
+use App\Helpers\Exceptions\UploadedFileException;
+use App\Helpers\FlashMessage;
+use App\Helpers\UploadedFileHandler;
 use App\Helpers\Validator;
-use App\Services\DB;
+use App\Photo;
+use App\Registry;
+use App\Services\PhotoRepository;
+use App\Services\TweetRepository;
+use App\Services\UserRepository;
+use App\Tweet;
 
 const UPLOAD_PATH = "uploads";
 const MAX_SIZE = 1024 * 1024 * 3;
 
 $errors = [];
 $data = [];
+
+$userRepository = Registry::get(UserRepository::class);
+$tweetRepository = Registry::get(TweetRepository::class);
+$photoRepository = Registry::get(PhotoRepository::class);
 
 $newFilename = "";
 
@@ -54,22 +63,25 @@ if (!empty($errors)) {
             'created_at' => date("Y-m-d h:i:s"),
             'like_count' => 0
         ];
-        $db->run("INSERT INTO tweet (text, user_id, created_at, like_count) VALUES (:text, :user_id, :created_at, :like_count)", $data);
-        $pdo = $db->getPDO();
-        $id = $pdo->lastInsertId();
+        $user = $userRepository->find($data['user_id']);
+        if (empty($user)) {
+            header("Location: login.php");
+            exit();
+        }
+        $tweet = new Tweet($data["text"], $user);
+        $tweet->setCreatedAt(new DateTime());
+        $tweet->setLikeCount(0);
+
+        $tweetRepository->save($tweet);
 
         if (!empty($newFilename)) {
             try {
                 list($width, $height) = getimagesize(UPLOAD_PATH . "/" . $newFilename);
-                $stmt = $pdo->prepare("INSERT INTO media (alt_text, width, height, tweet_id, url) VALUES (:alt_text, :width, :height, :tweet_id, :url)");
-                $stmt->bindValue("alt_text", $newFilename);
-                $stmt->bindValue("width", $width);
-                $stmt->bindValue("height", $height);
-                $stmt->bindValue("tweet_id", $id);
-                $stmt->bindValue("url", $newFilename);
-                var_dump($stmt);
-                $stmt->execute();
-
+                $photo = new Photo($newFilename, $width, $height, $newFilename);
+                $photo->setUrl($newFilename);
+                $photo->setTweet($tweet);
+                $tweet->addAttachment($photo);
+                $photoRepository->save($photo);
             } catch (Exception $e) {
                 $errors[] = $e->getMessage();
             }

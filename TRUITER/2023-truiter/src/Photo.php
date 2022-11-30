@@ -6,6 +6,40 @@ namespace App;
 class Photo extends Media
 {
     private string $altText;
+    private string $url;
+    private Tweet $tweet;
+
+    /**
+     * @return Tweet
+     */
+    public function getTweet(): Tweet
+    {
+        return $this->tweet;
+    }
+
+    /**
+     * @param Tweet $tweet
+     */
+    public function setTweet(Tweet $tweet): void
+    {
+        $this->tweet = $tweet;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
+    }
 
     public function __construct(string $caption, int $width, int $height, string $altText)
     {

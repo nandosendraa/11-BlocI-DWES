@@ -5,10 +5,13 @@ use App\Twitter;
 use App\User;
 use App\Video;
 use App\FlashMessage;
+use App\Services\UserRepository;
+use App\Registry;
+use App\Helpers\Validator;
 require ('bootstrap.php');
 
 $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
-
+$userRepository = Registry::get(UserRepository::class);
 $errors = [];
 $isPost = false;
 $usuario = "";
@@ -25,34 +28,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $passwordRepeat = $_POST["passwordRepeat"];
     $passwordHash = password_hash($password,PASSWORD_DEFAULT);
 
-    $stmt = $pdo->prepare("SELECT * FROM user WHERE username LIKE :username");
-    $stmt->bindValue(":username",$usuario);
-    $stmt->execute();
-    $usuaris = $stmt->fetch();
+    $usuariTrobat = $userRepository->findByUsername($usuario);
+    try {
+        if (empty($nom))
+            $errors[] = "Has de introduir el nom";
 
-    if (empty($nom))
-        $errors[] = "Has de introduir el nom";
+        Validator::lengthBetween($nom,2,50,'El nom es masa gran');
+        catch (InvalidArgumentException $e){
+            $errors[] = $e->getMessage();
+        }
 
-    if (strlen($nom)>50)
-        $errors[] = "El nom es masa gran";
 
-    if (empty($usuario))
-        $errors[] = "Has de introduir l'usuari";
+        if (empty($usuario))
+            $errors[] = "Has de introduir l'usuari";
 
-    if (strlen($usuario)>15)
-        $errors[] = "L'usuari es masa gran";
+        if (strlen($usuario) > 15)
+            $errors[] = "L'usuari es masa gran";
 
-    if (strlen($password) < 8 || strlen($password) > 16)
-        $errors[] = "La contrasenya ha de tindre entre 8 i 16 caracters";
+        if (strlen($password) < 8 || strlen($password) > 16)
+            $errors[] = "La contrasenya ha de tindre entre 8 i 16 caracters";
 
-    if (empty($password))
-        $errors[] = "Has de introduir la contrasenya";
+        if (empty($password))
+            $errors[] = "Has de introduir la contrasenya";
 
-    if ($passwordRepeat != $password)
-        $errors[] = "Les contrasenyes no coincideixen";
+        if ($passwordRepeat != $password)
+            $errors[] = "Les contrasenyes no coincideixen";
 
-    if ($usuaris != false)
-        $errors[] = "L'usuari ja existeix";
+        if ($usuariTrobat != false)
+            $errors[] = "L'usuari ja existeix";
+    }
 }
 
 if (!empty($errors)) {
