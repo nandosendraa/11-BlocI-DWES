@@ -23,7 +23,8 @@ class Registry
     private static array $allowedKeys = [
         self::DB,
         TweetRepository::class,
-        UserRepository::class
+        UserRepository::class,
+        "logger"
     ];
 
 

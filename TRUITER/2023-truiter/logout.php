@@ -1,14 +1,14 @@
 <?php
 $msg = "";
 session_start();
-require('src/App/FlashMessage.php');
+require('bootstrap.php');
 use App\FlashMessage;
 
 $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root",'root');
 if ($_SERVER['REQUEST_METHOD'] === 'GET'){
         $stmt = $pdo->prepare("DELETE FROM `tweet` WHERE user_id LIKE :id");
             $stmt->bindValue(":id", $_SESSION['user']['id']);
-        $stmt->execute( );
+        $stmt->execute();
 
         $stmt = $pdo->prepare("DELETE FROM `user` WHERE username LIKE :username");
             $stmt->bindValue(":username", $_SESSION['user']['username']);

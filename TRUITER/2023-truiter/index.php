@@ -1,8 +1,5 @@
 <?php
-session_start();
-
-
-require ('autoload.php');
+require ('bootstrap.php');
 use App\Photo;
 use App\Tweet;
 use App\Twitter;
@@ -12,12 +9,6 @@ use App\FlashMessage;
 
 
 $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
-
-
-
-
-
-
 
 $twitter = new Twitter();
 

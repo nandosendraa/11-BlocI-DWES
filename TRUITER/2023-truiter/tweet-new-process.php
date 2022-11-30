@@ -32,13 +32,10 @@ if (empty($errors)) {
     try {
         $uploadedFile = new UploadedFileHandler($_FILES["file"], $validTypes, MAX_SIZE);
         $newFilename = $uploadedFile->handle(UPLOAD_PATH);
-    }
-    catch (NoUploadedFileException $e) {
-    }
-    catch (UploadedFileException $e) {
+    } catch (NoUploadedFileException $e) {
+    } catch (UploadedFileException $e) {
         $errors[] = $e->getMessage();
-    }
-    catch (Exception $exception) {
+    } catch (Exception $exception) {
         $errors[] = "Error general:" . $exception->getMessage();
     }
 }
@@ -51,7 +48,13 @@ if (!empty($errors)) {
 } else {
 
     try {
-        $db->run("INSERT INTO tweet (text, user_id, created_at, like_count) VALUES (:text, :user_id, :created_at, :like_count)",['user_id'=>$_SESSION['user']['id'], 'created_at' => date("Y-m-d h:i:s"),'like_count' => 0]);
+        $data = [
+            'text' => $text,
+            'user_id' => $_SESSION['user']['id'],
+            'created_at' => date("Y-m-d h:i:s"),
+            'like_count' => 0
+        ];
+        $db->run("INSERT INTO tweet (text, user_id, created_at, like_count) VALUES (:text, :user_id, :created_at, :like_count)", $data);
         $pdo = $db->getPDO();
         $id = $pdo->lastInsertId();
 

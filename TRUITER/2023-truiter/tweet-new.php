@@ -1,9 +1,8 @@
 <?php
-require_once 'autoload.php';
+require_once 'bootstrap.php';
 
 use App\FlashMessage;
 
-session_start();
 // ací va la lògica per crear un nou tweet
 
 $errors = FlashMessage::get('errors', []);

@@ -7,7 +7,7 @@ use App\Twitter;
 use App\User;
 use App\Video;
 use App\FlashMessage;
-require ('autoload.php');
+require ('bootstrap.php');
 
 $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
 $errors = [];
