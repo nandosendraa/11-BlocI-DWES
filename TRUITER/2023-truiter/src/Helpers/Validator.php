@@ -14,7 +14,7 @@ class Validator
 
         if (empty($message))
             $message = "El valor (%s) deu tindre entre %d i %d caracters";
-        throw new InvalidArgumentException(sprintf($message, $value, $min, $max));
+        throw new InvalidArgumentException($message);
     }
     static function regex(string $value,string $pattern, string $message = ''): bool{
         if (preg_match($pattern,$value))
@@ -22,6 +22,6 @@ class Validator
 
         if (empty($message))
             $message = "El format de %s no es correcte";
-        throw new InvalidArgumentException(sprintf($message, $value));
+        throw new InvalidArgumentException($message);
     }
 }

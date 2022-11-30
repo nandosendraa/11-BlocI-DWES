@@ -29,39 +29,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $passwordHash = password_hash($password,PASSWORD_DEFAULT);
 
     $usuariTrobat = $userRepository->findByUsername($usuario);
+
     try {
-        if (empty($nom))
-            $errors[] = "Has de introduir el nom";
-
         Validator::lengthBetween($nom,2,50,'El nom es masa gran');
-        catch (InvalidArgumentException $e){
-            $errors[] = $e->getMessage();
-        }
-
-
-        if (empty($usuario))
-            $errors[] = "Has de introduir l'usuari";
-
-        if (strlen($usuario) > 15)
-            $errors[] = "L'usuari es masa gran";
-
-        if (strlen($password) < 8 || strlen($password) > 16)
-            $errors[] = "La contrasenya ha de tindre entre 8 i 16 caracters";
-
-        if (empty($password))
-            $errors[] = "Has de introduir la contrasenya";
-
-        if ($passwordRepeat != $password)
-            $errors[] = "Les contrasenyes no coincideixen";
-
-        if ($usuariTrobat != false)
-            $errors[] = "L'usuari ja existeix";
+        Validator::lengthBetween($usuario,2,15,"L'usuari es masa gran");
+        Validator::lengthBetween($password,8,16,'La contrasenya ha de tindre entre 8 i 16 caracters');
     }
+    catch (InvalidArgumentException $e){
+        $errors[] = $e->getMessage();
+    }
+    if (empty($nom))
+        $errors[] = "Has de introduir el nom";
+
+    if (empty($usuario))
+        $errors[] = "Has de introduir l'usuari";
+
+    if (empty($password))
+        $errors[] = "Has de introduir la contrasenya";
+
+    if ($passwordRepeat != $password)
+        $errors[] = "Les contrasenyes no coincideixen";
+
+    if ($usuariTrobat != false)
+        $errors[] = "L'usuari ja existeix";
 }
 
 if (!empty($errors)) {
     FlashMessage::set('errors',$errors);
     header('Location: register.php');
+    exit();
 }
 
 if (empty($errors)) {
