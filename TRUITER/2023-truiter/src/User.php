@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use Cassandra\Date;
 use DateTime;
 
 class User
@@ -113,6 +114,11 @@ class User
     public function setVerified(bool $verified): void
     {
         $this->verified = $verified;
+    }
+
+    public function getVerified(): bool
+    {
+        return $this->verified;
     }
 
 }

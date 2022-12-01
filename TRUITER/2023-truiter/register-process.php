@@ -54,7 +54,11 @@ if (!empty($errors)) {
 }
 
 if (empty($errors)) {
-    $userRepository->addUser($nom,$usuario,$passwordHash,$date,$verified);
+    $newUser = new User($nom,$usuario);
+    $newUser->setPassword($passwordHash);
+    $newUser->setCreatedAt(new DateTime());
+    $newUser->setVerified(false);
+    $userRepository->addUser($newUser);
     $_SESSION['user'] = $usuariTrobat;
     header('Location: index.php');
     exit();

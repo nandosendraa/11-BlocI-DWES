@@ -6,6 +6,7 @@ use App\Registry;
 use App\User;
 use DateTime;
 
+
 class UserRepository
 {
     private DB $db;
@@ -25,6 +26,7 @@ class UserRepository
         $user = new User($row["username"], $row["name"]);
         $user->setCreatedAt(DateTime::createFromFormat("Y-m-d h:i:s", $row["created_at"]));
         $user->setId($row["id"]);
+        $user->setPassword($row["password"]);
         return $user;
     }
     public function findByUsername(string $username): ?User
@@ -38,24 +40,25 @@ class UserRepository
         $user = new User($row["username"], $row["name"]);
         $user->setCreatedAt(DateTime::createFromFormat("Y-m-d h:i:s", $row["created_at"]));
         $user->setId($row["id"]);
+        $user->setPassword($row["password"]);
         return $user;
     }
-    public function addUser(string $nom ,string $username,string $password,string $date,int $verified):void
+    public function addUser(User $user):void
     {
         $stmt = $this->db->run("INSERT INTO user (name, username, password, created_at, verified) VALUES (:name, :username, :password, :created_at, :verified)",
-            ['name'=> $nom ,"username" => $username, "password" => $password, "created_at" => $date, "verified" => $verified]);
+            ['name'=> $user->getName() ,"username" => $user->getUsername(), "password" => $user->getPassword(), "created_at" => $user->getCreatedAt(), "verified" => $user->getVerified()]);
     }
 
-    public function changeUser(string $username, int $id):void
+    public function changeUser(string $username, User $user):void
     {
         $stmt = $this->db->run("UPDATE user SET username = :username WHERE id = :id",
-            ["username" => $username, "id" => $id]);
+            ["username" => $username, "id" => $user->getId()]);
     }
 
-    public function changeName(string $name, int $id):void
+    public function changeName(string $name,User $user):void
     {
         $stmt = $this->db->run("UPDATE user SET name = :name WHERE id = :id",
-            ["name" => $name, "id" => $id]);
+            ["name" => $name, "id" => $user->getId()]);
     }
 
     public function delete($username):void

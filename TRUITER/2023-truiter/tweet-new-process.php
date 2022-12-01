@@ -4,7 +4,7 @@ require_once 'bootstrap.php';
 
 use App\Helpers\Exceptions\NoUploadedFileException;
 use App\Helpers\Exceptions\UploadedFileException;
-use App\Helpers\FlashMessage;
+use App\FlashMessage;
 use App\Helpers\UploadedFileHandler;
 use App\Helpers\Validator;
 use App\Photo;
