@@ -10,6 +10,7 @@ class User
     private DateTime $createdAt;
     private bool $verified;
     private int $id;
+    private string $password;
 
     /**
      * @return int
@@ -42,7 +43,6 @@ class User
     {
         $this->password = $password;
     }
-    private string $password;
 
     public function __construct(string $name, string $username)
     {

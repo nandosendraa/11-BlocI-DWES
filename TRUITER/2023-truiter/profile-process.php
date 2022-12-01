@@ -1,11 +1,15 @@
 <?php
+require ('bootstrap.php');
 use App\Photo;
 use App\Tweet;
 use App\Twitter;
 use App\User;
 use App\Video;
 use App\FlashMessage;
-require ('bootstrap.php');
+use App\Services\UserRepository;
+use App\Helpers\Validator;
+use App\Registry;
+
 
 $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", "root");
 $errors = [];
@@ -13,52 +17,42 @@ $isPost = false;
 $username = "";
 $id = $_SESSION['user']['id'];
 $name= "";
+$userRepository = Registry::get(UserRepository::class);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isPost = true;
     $name = $_POST["name"];
     $username = $_POST["username"];
+    $usuariTrobat = $userRepository->findByUsername($username);
+    try {
+        Validator::lengthBetween($name,0,50,'El nom es masa gran');
+        Validator::lengthBetween($username,0,15,"L'usuari es masa gran");
+    }
+    catch (InvalidArgumentException $e){
+        $errors[] = $e->getMessage();
+    }
 
-    $stmt = $pdo->prepare("SELECT * FROM user WHERE username LIKE :username");
-    $stmt->bindValue(":username",$username);
-    $stmt->execute();
-    $usuaris = $stmt->fetch();
-    var_dump($usuaris);
-
-    if ($usuaris != false)
+    if ($usuariTrobat != false)
         $errors[] = "L'usuari ja existeix";
 
-    if (!empty($name)) {
-        if (strlen($name) > 50)
-            $errors[] = "El nom es masa gran";
-    }
-
-    if (!empty($username)) {
-        if (strlen($username) > 20)
-            $errors[] = "L'usuari es masa gran";
-    }
 }
 
 if (!empty($errors)) {
     FlashMessage::set('errors',$errors);
     header('Location: profile.php');
+    exit();
 }
 
 if (empty($errors)) {
     if (!empty($username)) {
-        $stmt = $pdo->prepare("UPDATE user SET username = :username WHERE id = :id");
-            $stmt->bindParam(":username",$username);
-            $stmt->bindParam(":id",$id);
-        $stmt->execute();
+        $userRepository->changeUser($username,$id);
         $_SESSION['user']['username']= $username;
     }
     if (!empty($name)) {
-        $stmt = $pdo->prepare("UPDATE user SET name = :name WHERE id = :id");
-        $stmt->bindParam(":name",$name);
-        $stmt->bindParam(":id",$id);
-        $stmt->execute();
+        $userRepository->changeName($name,$id);
         $_SESSION['user']['name']= $name;
     }
-   header('Location: index.php');
+    header('Location: index.php');
+    exit();
 }

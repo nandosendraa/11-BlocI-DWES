@@ -46,4 +46,22 @@ class UserRepository
             ['name'=> $nom ,"username" => $username, "password" => $password, "created_at" => $date, "verified" => $verified]);
     }
 
+    public function changeUser(string $username, int $id):void
+    {
+        $stmt = $this->db->run("UPDATE user SET username = :username WHERE id = :id",
+            ["username" => $username, "id" => $id]);
+    }
+
+    public function changeName(string $name, int $id):void
+    {
+        $stmt = $this->db->run("UPDATE user SET name = :name WHERE id = :id",
+            ["name" => $name, "id" => $id]);
+    }
+
+    public function delete($username):void
+    {
+        $stmt = $this->db->run("DELETE FROM `user` WHERE username LIKE :username",
+            ["username" => $username]);
+    }
+
 }

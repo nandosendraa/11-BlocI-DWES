@@ -17,7 +17,7 @@
             <h2>Segur que vols eliminar la cuenta?</h2>
             <p>Tens <?=$numberOfTweets?> tweets en aquesta cuenta</p>
             <hr>
-                <form class="mb-4" method="get" action="logout.php">
+                <form class="mb-4" method="get" action="deleteAccount.php">
                     <button class="btn btn-danger">Si</button>
                     <a class="btn btn-primary" href="index.php">No</a>
                 </form>
