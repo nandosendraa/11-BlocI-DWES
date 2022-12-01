@@ -1,4 +1,5 @@
 <?php
+require ('bootstrap.php');
 use App\Photo;
 use App\Tweet;
 use App\Twitter;
@@ -8,7 +9,7 @@ use App\FlashMessage;
 use App\Services\UserRepository;
 use App\Registry;
 use App\Helpers\Validator;
-require ('bootstrap.php');
+
 
 $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
 $userRepository = Registry::get(UserRepository::class);
@@ -31,21 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuariTrobat = $userRepository->findByUsername($usuario);
 
     try {
-        Validator::lengthBetween($nom,2,50,'El nom es masa gran');
-        Validator::lengthBetween($usuario,2,15,"L'usuari es masa gran");
+        Validator::lengthBetween($nom,2,50,'El nom ha de tindre entre entre 2 i 50 caracters');
+        Validator::lengthBetween($usuario,2,15,"L'usuari ha de tindre entre 2 i 15 caracters");
         Validator::lengthBetween($password,8,16,'La contrasenya ha de tindre entre 8 i 16 caracters');
     }
     catch (InvalidArgumentException $e){
         $errors[] = $e->getMessage();
     }
-    if (empty($nom))
-        $errors[] = "Has de introduir el nom";
-
-    if (empty($usuario))
-        $errors[] = "Has de introduir l'usuari";
-
-    if (empty($password))
-        $errors[] = "Has de introduir la contrasenya";
 
     if ($passwordRepeat != $password)
         $errors[] = "Les contrasenyes no coincideixen";
@@ -61,18 +54,8 @@ if (!empty($errors)) {
 }
 
 if (empty($errors)) {
-    try {
-        $stmt = $pdo->prepare("INSERT INTO user (name, username, password, created_at, verified) VALUES (:name, :username, :password, :created_at, :verified)");
-        $stmt->bindParam(':name', $nom);
-        $stmt->bindParam(':username', $usuario);
-        $stmt->bindParam(':password', $passwordHash);
-        $stmt->bindParam(':created_at', $date);
-        $stmt->bindParam(':verified',$verified);
-        $stmt->execute();
-    }
-    catch (PDOException $e){
-        $e->getMessage();
-    }
-    $_SESSION['user'] = $usuaris;
+    $userRepository->addUser($nom,$usuario,$passwordHash,$date,$verified);
+    $_SESSION['user'] = $usuariTrobat;
     header('Location: index.php');
+    exit();
 }

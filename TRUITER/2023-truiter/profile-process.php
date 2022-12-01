@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!empty($username)) {
-        if (strlen($username) > 50)
+        if (strlen($username) > 20)
             $errors[] = "L'usuari es masa gran";
     }
 }

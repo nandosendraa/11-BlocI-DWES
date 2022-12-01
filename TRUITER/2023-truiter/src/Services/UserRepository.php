@@ -40,4 +40,10 @@ class UserRepository
         $user->setId($row["id"]);
         return $user;
     }
+    public function addUser(string $nom ,string $username,string $password,string $date,int $verified):void
+    {
+        $stmt = $this->db->run("INSERT INTO user (name, username, password, created_at, verified) VALUES (:name, :username, :password, :created_at, :verified)",
+            ['name'=> $nom ,"username" => $username, "password" => $password, "created_at" => $date, "verified" => $verified]);
+    }
+
 }
