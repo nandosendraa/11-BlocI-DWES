@@ -10,12 +10,15 @@ use App\Services\UserRepository;
 use App\Helpers\Validator;
 use App\Registry;
 
+$user = $_SESSION["user"] ?? null;
 
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", "root");
+if (empty($user))
+
+
 $errors = [];
 $isPost = false;
 $username = "";
-$id = $_SESSION['user']['id'];
+$id = $_SESSION['user']->getId();
 $name= "";
 $userRepository = Registry::get(UserRepository::class);
 
@@ -46,12 +49,12 @@ if (!empty($errors)) {
 
 if (empty($errors)) {
     if (!empty($username)) {
-        $userRepository->changeUser($username,$id);
-        $_SESSION['user']['username']= $username;
+        $user->setUsername($username);
+        $userRepository->update($user);
     }
     if (!empty($name)) {
-        $userRepository->changeName($name,$id);
-        $_SESSION['user']['name']= $name;
+        $user->setName($name);
+        $userRepository->update($user);
     }
     header('Location: index.php');
     exit();

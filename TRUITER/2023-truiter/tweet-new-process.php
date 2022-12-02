@@ -59,7 +59,7 @@ if (!empty($errors)) {
     try {
         $data = [
             'text' => $text,
-            'user_id' => $_SESSION['user']['id'],
+            'user_id' => $_SESSION['user']->getId(),
             'created_at' => date("Y-m-d h:i:s"),
             'like_count' => 0
         ];

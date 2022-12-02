@@ -11,7 +11,6 @@ use App\Registry;
 use App\Helpers\Validator;
 
 
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
 $userRepository = Registry::get(UserRepository::class);
 $errors = [];
 $isPost = false;
@@ -57,9 +56,9 @@ if (empty($errors)) {
     $newUser = new User($nom,$usuario);
     $newUser->setPassword($passwordHash);
     $newUser->setCreatedAt(new DateTime());
-    $newUser->setVerified(false);
+    $newUser->setVerified($verified);
     $userRepository->addUser($newUser);
-    $_SESSION['user'] = $usuariTrobat;
+    $_SESSION['user'] = $newUser;
     header('Location: index.php');
     exit();
 }

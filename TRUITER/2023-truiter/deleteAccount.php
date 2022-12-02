@@ -8,8 +8,8 @@ if (empty($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
-$userId = $_SESSION['user']['id'];
-$username = $_SESSION['user']['username'];
+$userId = $_SESSION['user']->getId();
+$username = $_SESSION['user']->getUsername();
 $userRepository = Registry::get(UserRepository::class);
 
 $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root", 'root');

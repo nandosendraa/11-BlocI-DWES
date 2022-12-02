@@ -16,12 +16,12 @@ use App\FlashMessage;
 </nav>
 <nav>
     <ul class="nav flex-column">
-        <?php  if(!empty($_SESSION['user']['username'])) : ?>
+        <?php  if(!empty($_SESSION['user']->getUsername())) : ?>
             <form action="logout.php" method="post">
                 <button class="btn btn-primary">Tancar Sessió</button>
             </form>
             <li class="nav-item"><a class="nav-link" href="profile.php"><i class="bi bi-person-fill"></i>
-                    <?=$_SESSION['user']['username']?> </a></li>
+                    <?=$_SESSION['user']->getUsername()?> </a></li>
         <?php else : ?>
 
             <li class="nav-item"><a class="nav-link" href="login.php"><i class="bi bi-box-arrow-in-right"></i> Iniciar

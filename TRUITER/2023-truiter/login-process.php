@@ -1,13 +1,16 @@
 <?php
-session_start();
 
+require ('bootstrap.php');
 use App\Photo;
+use App\Registry;
+use App\Services\UserRepository;
 use App\Tweet;
 use App\Twitter;
 use App\User;
 use App\Video;
 use App\FlashMessage;
-require ('bootstrap.php');
+
+$userRepository = Registry::get(UserRepository::class);
 
 $pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
 $errors = [];
@@ -18,15 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isPost = true;
     $usuario = $_POST["username"];
     $password = $_POST["password"];
-    $stmt = $pdo->prepare("SELECT * FROM user WHERE username LIKE :username");
-    $stmt->bindValue(":username",$usuario);
-    $stmt->execute();
-    $usuaris = $stmt->fetch();
-
-    if($usuaris) {
-        $nom = $usuaris['name'];
-        $id = $usuaris['id'];
-    }
+    $usuariTrobat = $userRepository->findByUsername($usuario);
 
     if (empty($usuario))
         $errors[] = "Has de introduir l'usuari";
@@ -34,11 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($password))
         $errors[] = "Has de introduir la contrasenya";
 
-    if ($usuaris) {
-        if ($usuaris['username']!=$usuario) {
+    if ($usuariTrobat) {
+        if ($usuariTrobat->getUsername()!=$usuario) {
             $errors[] = "L'usuari no es correcte";
         }
-        if (!password_verify($password,$usuaris['password'])) {
+        if (!password_verify($password,$usuariTrobat->getPassword())) {
             $errors[] = "La contrasenya no es correcta";
         }
     }else
@@ -52,7 +47,7 @@ if (!empty($errors)) {
 }
 
 if (empty($errors)) {
-    $_SESSION['user'] = $usuaris;
+    $_SESSION['user'] = $usuariTrobat;
     header('Location: index.php');
     exit();
 }

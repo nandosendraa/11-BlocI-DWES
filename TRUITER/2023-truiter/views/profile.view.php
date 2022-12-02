@@ -24,10 +24,10 @@
 
             <form class="mb-4" method="post" action="profile-process.php">
                 <label for="usuario" class="form-label"">Nom</label>
-                    <input id="usuario mb-2" class="form-control" name="name" placeholder="<?= $_SESSION['user']['name']?>">
+                    <input id="usuario mb-2" class="form-control" name="name" placeholder="<?= $_SESSION['user']->getName()?>">
 
                 <label for="password" class="form-label">Usuari</label>
-                    <input id="password" class="form-control mb-2" name="username" placeholder="<?= $_SESSION['user']['username']?>">
+                    <input id="password" class="form-control mb-2" name="username" placeholder="<?= $_SESSION['user']->getUsername()?>">
 
 
                 <button class="btn btn-primary">Guardar Canvis</button>
