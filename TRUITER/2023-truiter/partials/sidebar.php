@@ -16,7 +16,7 @@ use App\FlashMessage;
 </nav>
 <nav>
     <ul class="nav flex-column">
-        <?php  if(!empty($_SESSION['user']->getUsername())) : ?>
+        <?php  if(!empty($_SESSION['user'])) : ?>
             <form action="logout.php" method="post">
                 <button class="btn btn-primary">Tancar Sessió</button>
             </form>

@@ -23,6 +23,7 @@ $data = [];
 $userRepository = Registry::get(UserRepository::class);
 $tweetRepository = Registry::get(TweetRepository::class);
 $photoRepository = Registry::get(PhotoRepository::class);
+$log = Registry::get('logger');
 
 $newFilename = "";
 
@@ -97,6 +98,7 @@ if (!empty($errors)) {
     }
 
     $_SESSION["data"] = $data;
+    $log->warning("L'usuari ".$user." ha creat un tweet");
     header('Location:index.php');
     exit();
 }

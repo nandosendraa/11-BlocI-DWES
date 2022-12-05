@@ -15,5 +15,4 @@ if (empty($_SESSION["user"])) {
 }
 
 $user = $_SESSION["user"];
-
 require 'views/tweet-new.view.php';

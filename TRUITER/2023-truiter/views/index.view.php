@@ -16,7 +16,7 @@
         </div>
         <div class="offset-2 col-6 border-start border-end border-1 p-4">
 
-            <?php if (!empty($_SESSION['user']->getUsername())):?>
+            <?php if (!empty($_SESSION['user'])):?>
                 <h1>Welcome to Truiter, @<?=$_SESSION['user']->getUsername()?></h1>
                 <form action="tweet-new.php" method="get">
                     <button class="btn btn-primary">Nou Truit</button>

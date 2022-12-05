@@ -51,18 +51,30 @@ class TweetRepository
         return $tweets;
     }
 
-    function save(Tweet $tweet)
+    function save(Tweet $tweet):void
     {
         $data["text"] = $tweet->getText();
         $data["user_id"] = $tweet->getAuthor()->getId();
         $data["created_at"] = $tweet->getCreatedAt()->format("Y-m-d h:i:s");
         $data["like_count"] = $tweet->getLikeCount();
 
-        $sql ="INSERT INTO tweet (text, user_id, created_at, like_count) VALUES (:text, :user_id, :created_at, :like_count)";
+        $sql = "INSERT INTO tweet (text, user_id, created_at, like_count) VALUES (:text, :user_id, :created_at, :like_count)";
         $stmt = $this->db->run($sql, $data);
 
         $id = $this->db->getPDO()->lastInsertId();
         $tweet->setId($id);
+    }
+
+    function deleteAll($id):void
+    {
+        $this->db->run("DELETE FROM `tweet` WHERE user_id LIKE :id",
+            ["id" => $id]);
+    }
+
+    function retrieveId($id):array
+    {
+        $stmt = $this->db->run("SELECT id FROM `tweet` WHERE user_id = :id",["id" => $id]);
+        return $stmt->fetchAll();
     }
 
 }

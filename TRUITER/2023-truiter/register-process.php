@@ -12,6 +12,7 @@ use App\Helpers\Validator;
 
 
 $userRepository = Registry::get(UserRepository::class);
+$log = Registry::get('logger');
 $errors = [];
 $isPost = false;
 $usuario = "";
@@ -59,6 +60,7 @@ if (empty($errors)) {
     $newUser->setVerified($verified);
     $userRepository->addUser($newUser);
     $_SESSION['user'] = $newUser;
+    $log->warning("s'ha registrat l'usuari ".$usuario);
     header('Location: index.php');
     exit();
 }

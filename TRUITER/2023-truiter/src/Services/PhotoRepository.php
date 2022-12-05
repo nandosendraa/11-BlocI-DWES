@@ -31,4 +31,11 @@ class PhotoRepository
         $this->db->run($sql, $data);
     }
 
+    function delete($id)
+    {
+        $this->db->run("DELETE FROM `media` WHERE tweet_id LIKE :id",
+            ["id" => $id]);
+    }
+
+
 }

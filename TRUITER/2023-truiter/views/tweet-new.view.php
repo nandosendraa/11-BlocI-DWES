@@ -24,10 +24,9 @@
                     </div>
                 <?php endforeach;?>
             <?php endif;?>
-
             <form class="mb-4" action="tweet-new-process.php" method="post" enctype="multipart/form-data" ?>
                 <textarea class="form-control mb-2" name="text"
-                          placeholder="Què passa, <?= $user["username"] ?>?"></textarea>
+                          placeholder="Què passa, <?= $_SESSION['user']->getUsername() ?>?"></textarea>
                 <input type="file" class="form-control mb-2" name="file">
                 <button class="btn btn-primary">Tweet</button>
             </form>

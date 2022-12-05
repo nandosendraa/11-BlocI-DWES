@@ -11,8 +11,8 @@ use App\Video;
 use App\FlashMessage;
 
 $userRepository = Registry::get(UserRepository::class);
+$log = Registry::get('logger');
 
-$pdo = new PDO("mysql:host=localhost; dbname=truiter", "root","root");
 $errors = [];
 $isPost = false;
 $usuario = "";
@@ -48,6 +48,7 @@ if (!empty($errors)) {
 
 if (empty($errors)) {
     $_SESSION['user'] = $usuariTrobat;
+    $log->warning("L'usuari ".$usuario." ha iniciat sessio");
     header('Location: index.php');
     exit();
 }
