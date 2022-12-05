@@ -98,7 +98,7 @@ if (!empty($errors)) {
     }
 
     $_SESSION["data"] = $data;
-    $log->warning("L'usuari ".$user." ha creat un tweet");
+    $log->warning("L'usuari ".$user->getUsername()." ha creat un tweet");
     header('Location:index.php');
     exit();
 }
